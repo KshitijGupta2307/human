@@ -1,0 +1,34 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Notes folder - PDFs and other documents
+    match /notes/{allPaths=**} {
+      // Anyone authenticated can read files
+      allow read: if isAuthenticated();
+      
+      // Only admins can upload/delete files
+      allow write: if isAdmin();
+    }
+    
+    // Optional: User profile pictures
+    match /profiles/{userId}/{allPaths=**} {
+      // Anyone can read profile pictures
+      allow read: if isAuthenticated();
+      
+      // Users can only upload their own profile pictures
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
