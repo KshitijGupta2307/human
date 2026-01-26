@@ -1,11 +1,28 @@
 # 🧠 CogMech Analytics - Student Progress Tracking Platform
 
-A modern, full-stack web application for tracking student learning progress across different engineering sections (Electrical, Mechanical, and Operator). Built with React, Firebase, and Tailwind CSS, featuring Google Authentication and real-time progress tracking.
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://kshitijgupta2307.github.io/human/)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/KshitijGupta2307/human)
+[![React](https://img.shields.io/badge/React-18.2.0-61dafb.svg)](https://reactjs.org/)
+[![Firebase](https://img.shields.io/badge/Firebase-10.7.1-ffca28.svg)](https://firebase.google.com/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/deployed-GitHub%20Pages-blue)](https://kshitijgupta2307.github.io/human/)
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![React](https://img.shields.io/badge/React-18.2.0-61dafb.svg)
-![Firebase](https://img.shields.io/badge/Firebase-10.7.1-ffca28.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+> A modern, full-stack web application for tracking student learning progress across different engineering sections (Electrical, Mechanical, and Operator). Built with React, Firebase, and Tailwind CSS, featuring Google Authentication and real-time progress tracking.
+
+## 🚀 Live Demo
+
+**Production Site:** [https://kshitijgupta2307.github.io/human/](https://kshitijgupta2307.github.io/human/)
+
+## 📋 Table of Contents
+
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Architecture](#️-architecture)
+- [Deployment](#-deployment)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [Support](#-support)
+- [License](#-license)
 
 ## 🌟 Features
 
@@ -121,15 +138,17 @@ User Access
                                    └─→ Delete Content
 ```
 
-## 📦 Installation & Setup
+## 📦 Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 - Firebase account
 - Google Cloud Console project (for OAuth)
 
-### Step 1: Clone the Repository
+### Local Development
+
+**Step 1: Clone the Repository**
 ```bash
 cd "d:\human cognitive science"
 # Repository is already set up
@@ -498,7 +517,48 @@ npm run build
 
 ## 🚢 Deployment
 
-### Deploy to Firebase Hosting
+### Option 1: Automated GitHub Pages Deployment (Recommended)
+
+This project includes automated GitHub Actions workflow for seamless deployment.
+
+**Setup:**
+
+1. **Enable GitHub Pages:**
+   - Go to repository Settings → Pages
+   - Under "Source", select: **GitHub Actions**
+   - Save the changes
+
+2. **Add Firebase Domain:**
+   - Go to [Firebase Console](https://console.firebase.google.com/project/human-coginitive-science/authentication/settings)
+   - Add authorized domain: `<your-username>.github.io`
+
+3. **Push to Main Branch:**
+   ```bash
+   git add .
+   git commit -m "Your changes"
+   git push origin main
+   ```
+
+4. **Automatic Deployment:**
+   - GitHub Actions will automatically build and deploy
+   - Check Actions tab for deployment status
+   - Site will be live at: `https://<your-username>.github.io/<repo-name>/`
+
+**Current Live Site:** [https://kshitijgupta2307.github.io/human/](https://kshitijgupta2307.github.io/human/)
+
+### Option 2: Manual GitHub Pages Deployment
+
+```bash
+# Build and deploy manually
+npm run deploy
+```
+
+This command:
+- Builds the production bundle
+- Pushes to `gh-pages` branch
+- Deploys automatically
+
+### Option 3: Firebase Hosting
 
 1. Install Firebase CLI:
 ```bash
@@ -525,7 +585,7 @@ npm run build
 firebase deploy --only hosting
 ```
 
-### Deploy to Vercel
+### Option 4: Vercel
 
 1. Install Vercel CLI:
 ```bash
@@ -539,7 +599,7 @@ vercel
 
 3. Add environment variables in Vercel dashboard
 
-### Deploy to Netlify
+### Option 5: Netlify
 
 1. Build the app:
 ```bash
@@ -561,14 +621,20 @@ Contributions are welcome! Please follow these steps:
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Support
+## 📧 Contact & Support
+
+**Developer:** Kshitij Gupta  
+**Email:** [guptakshitij266@gmail.com](mailto:guptakshitij266@gmail.com)  
+**GitHub:** [KshitijGupta2307](https://github.com/KshitijGupta2307)  
+**Project Link:** [https://github.com/KshitijGupta2307/human](https://github.com/KshitijGupta2307/human)
 
 For questions or issues:
-- Create an issue in the repository
-- Contact the development team
-- Check Firebase documentation: https://firebase.google.com/docs
+- 📝 Create an issue in the [GitHub repository](https://github.com/KshitijGupta2307/human/issues)
+- 📧 Email support at guptakshitij266@gmail.com
+- 📚 Check [documentation files](./DEPLOYMENT_GUIDE.md)
+- 🔧 See [troubleshooting guide](./GITHUB_PAGES_TROUBLESHOOTING.md)
 
 ## 🙏 Acknowledgments
 
