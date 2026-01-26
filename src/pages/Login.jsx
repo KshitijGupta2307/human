@@ -66,10 +66,10 @@ const Login = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
               Master Your Learning Journey
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
               A comprehensive platform designed to track and enhance student progress 
               across Electrical, Mechanical, and Operator sections.
             </p>
@@ -146,7 +146,7 @@ const Login = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-20 grid grid-cols-3 gap-8"
+          className="mt-12 sm:mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
         >
           {[
             { label: 'Sections', value: '3+' },

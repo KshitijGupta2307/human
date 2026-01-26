@@ -124,23 +124,23 @@ const StudentDashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
       <nav className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
             <div className="flex items-center">
-              <Brain className="h-8 w-8 text-primary-600" />
-              <span className="ml-2 text-2xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
+              <Brain className="h-6 w-6 sm:h-8 sm:w-8 text-primary-600" />
+              <span className="ml-2 text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
                 CogMech Analytics
               </span>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <img
                   src={user?.photoURL}
                   alt={user?.displayName}
-                  className="w-10 h-10 rounded-full border-2 border-primary-500"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-primary-500"
                 />
-                <div>
-                  <div className="font-semibold text-gray-800">{user?.displayName}</div>
+                <div className="hidden sm:block">
+                  <div className="font-semibold text-gray-800 text-sm">{user?.displayName}</div>
                   <div className="text-xs text-gray-500">{user?.email}</div>
                 </div>
               </div>
@@ -148,10 +148,11 @@ const StudentDashboard = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleSignOut}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base"
               >
-                <LogOut className="h-4 w-4" />
-                Sign Out
+                <LogOut className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Sign Out</span>
+                <span className="sm:hidden">Out</span>
               </motion.button>
             </div>
           </div>
@@ -170,7 +171,7 @@ const StudentDashboard = () => {
         </motion.div>
 
         {/* Progress Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -240,8 +241,8 @@ const StudentDashboard = () => {
         </div>
 
         {/* Section Selector */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Select Section</h2>
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">Select Section</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {SECTIONS.map((section, index) => (
               <motion.button
@@ -266,7 +267,7 @@ const StudentDashboard = () => {
         </div>
 
         {/* Notes List */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
+        <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-3">
               {currentSection && <currentSection.icon className="h-7 w-7" />}
@@ -302,14 +303,14 @@ const StudentDashboard = () => {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: 20 }}
                       transition={{ delay: index * 0.05 }}
-                      className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100"
+                      className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 sm:p-6 shadow-md hover:shadow-lg transition-shadow border border-gray-100"
                     >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-3">
-                            <FileText className="h-6 w-6 text-primary-600" />
-                            <h3 className="text-lg font-bold text-gray-800">{note.title}</h3>
-                            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
+                        <div className="flex-1 w-full">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                            <FileText className="h-5 w-5 sm:h-6 sm:w-6 text-primary-600" />
+                            <h3 className="text-base sm:text-lg font-bold text-gray-800 break-words">{note.title}</h3>
+                            <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${
                               note.type === 'pdf' 
                                 ? 'bg-red-100 text-red-700' 
                                 : 'bg-blue-100 text-blue-700'
@@ -317,25 +318,25 @@ const StudentDashboard = () => {
                               {note.type.toUpperCase()}
                             </span>
                           </div>
-                          <p className="text-gray-600 mb-4">{note.description}</p>
+                          <p className="text-sm sm:text-base text-gray-600 mb-4">{note.description}</p>
                           
-                          <div className="flex items-center gap-4">
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
                             <a
                               href={note.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow"
+                              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-purple-600 text-white rounded-lg font-semibold hover:shadow-lg transition-shadow text-sm w-full sm:w-auto"
                             >
                               <ExternalLink className="h-4 w-4" />
                               Open {note.type === 'pdf' ? 'PDF' : 'Link'}
                             </a>
 
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600 font-medium">Status:</span>
+                            <div className="flex items-center gap-2 w-full sm:w-auto">
+                              <span className="text-xs sm:text-sm text-gray-600 font-medium">Status:</span>
                               <select
                                 value={noteStatus}
                                 onChange={(e) => handleStatusChange(note.id, e.target.value)}
-                                className={`px-3 py-2 rounded-lg border-2 font-semibold text-sm transition-all cursor-pointer ${
+                                className={`flex-1 sm:flex-none px-2 sm:px-3 py-2 rounded-lg border-2 font-semibold text-xs sm:text-sm transition-all cursor-pointer ${
                                   noteStatus === 'completed' 
                                     ? 'border-green-500 bg-green-50 text-green-700'
                                     : noteStatus === 'in-progress'
