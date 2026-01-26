@@ -23,12 +23,24 @@ dist-ssr
 *.sln
 *.sw?
 
-# Environment variables
+# Environment variables - CRITICAL: Never commit these!
 .env
 .env.local
+.env.development
 .env.production
+.env.*.local
 
 # Firebase
 .firebase
 .firebaserc
 firebase-debug.log
+firestore-debug.log
+
+# Firebase credentials and service accounts
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+firebase-adminsdk.json
+
+# OS specific
+Thumbs.db
+.DS_Store
