@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Brain, BookOpen, TrendingUp, Users } from 'lucide-react';
+import { Brain, BookOpen, TrendingUp, Users, Mail } from 'lucide-react';
 import { signInWithGoogle } from '../firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -162,6 +162,35 @@ const Login = () => {
           ))}
         </motion.div>
       </div>
+
+      {/* Footer - Contact Section */}
+      <footer className="bg-white border-t border-gray-200 mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center mb-4 md:mb-0">
+              <Brain className="h-6 w-6 text-primary-600" />
+              <span className="ml-2 text-lg font-semibold text-gray-800">
+                CogMech Analytics
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2 text-gray-600">
+              <Mail className="h-5 w-5" />
+              <span className="text-sm">Contact us:</span>
+              <a 
+                href="mailto:guptakshitij266@gmail.com" 
+                className="text-primary-600 hover:text-primary-700 font-medium transition-colors"
+              >
+                guptakshitij266@gmail.com
+              </a>
+            </div>
+            
+            <div className="text-sm text-gray-500 mt-4 md:mt-0">
+              © {new Date().getFullYear()} CogMech Analytics. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

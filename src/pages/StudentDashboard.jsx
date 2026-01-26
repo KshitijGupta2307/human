@@ -13,7 +13,8 @@ import {
   Users as UsersIcon,
   TrendingUp,
   Award,
-  BookOpen
+  BookOpen,
+  Mail
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { signOut } from '../firebase/auth';
@@ -376,6 +377,33 @@ const StudentDashboard = () => {
             <p className="text-lg">You've completed all notes in the {currentSection?.name} section!</p>
           </motion.div>
         )}
+
+        {/* Footer - Contact Section */}
+        <footer className="mt-12 bg-white rounded-xl shadow-lg p-6">
+          <div className="flex flex-col md:flex-row items-center justify-between">
+            <div className="flex items-center mb-4 md:mb-0">
+              <Brain className="h-5 w-5 text-primary-600" />
+              <span className="ml-2 text-sm font-semibold text-gray-800">
+                CogMech Analytics
+              </span>
+            </div>
+            
+            <div className="flex items-center gap-2 text-gray-600">
+              <Mail className="h-4 w-4" />
+              <span className="text-sm">Need help?</span>
+              <a 
+                href="mailto:guptakshitij266@gmail.com" 
+                className="text-primary-600 hover:text-primary-700 font-medium transition-colors text-sm"
+              >
+                guptakshitij266@gmail.com
+              </a>
+            </div>
+            
+            <div className="text-xs text-gray-500 mt-4 md:mt-0">
+              © {new Date().getFullYear()} All rights reserved.
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
