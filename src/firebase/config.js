@@ -26,6 +26,11 @@ export const db = getFirestore(app);
 export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 
+// Force account selection on every sign-in
+googleProvider.setCustomParameters({
+  prompt: 'select_account'
+});
+
 // Initialize Analytics (optional)
 export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
 
