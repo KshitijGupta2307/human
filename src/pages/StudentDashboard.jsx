@@ -28,7 +28,7 @@ import {
 const SECTIONS = [
   { id: 'electrical', name: 'Electrical', icon: Zap, color: 'from-yellow-400 to-orange-500' },
   { id: 'mechanical', name: 'Mechanical', icon: Cog, color: 'from-blue-400 to-cyan-500' },
-  { id: 'operator', name: 'Operator', icon: UsersIcon, color: 'from-green-400 to-emerald-500' }
+  { id: 'operator', name: 'Computer Operator', icon: UsersIcon, color: 'from-green-400 to-emerald-500' }
 ];
 
 const STATUS_OPTIONS = [

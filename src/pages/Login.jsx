@@ -71,7 +71,7 @@ const Login = () => {
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
               A comprehensive platform designed to track and enhance student progress 
-              across Electrical, Mechanical, and Operator sections.
+              across Electrical, Mechanical, and Computer Operator sections.
             </p>
             
             <motion.button
