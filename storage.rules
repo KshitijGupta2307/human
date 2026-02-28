@@ -1,34 +1,46 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    
-    // Helper function to check if user is admin
-    function isAdmin() {
-      return request.auth != null && 
-             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-    
-    // Helper function to check if user is authenticated
+
+    // ─── Helper Functions ───────────────────────────────────────
     function isAuthenticated() {
       return request.auth != null;
     }
-    
-    // Notes folder - PDFs and other documents
-    match /notes/{allPaths=**} {
-      // Anyone authenticated can read files
-      allow read: if isAuthenticated();
-      
-      // Only admins can upload/delete files
-      allow write: if isAdmin();
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
     }
-    
-    // Optional: User profile pictures
-    match /profiles/{userId}/{allPaths=**} {
-      // Anyone can read profile pictures
+
+    // ─── Notes folder (PDFs and documents) ──────────────────────
+    match /notes/{allPaths=**} {
+      // Authenticated users can read/download files
       allow read: if isAuthenticated();
-      
-      // Users can only upload their own profile pictures
-      allow write: if request.auth != null && request.auth.uid == userId;
+
+      // Only admins can upload files; max 20 MB, must be PDF
+      allow create: if isAdmin() &&
+                       request.resource.size < 20 * 1024 * 1024 &&
+                       request.resource.contentType.matches('application/pdf');
+
+      // Only admins can overwrite or delete files
+      allow update, delete: if isAdmin();
+    }
+
+    // ─── Profile pictures ───────────────────────────────────────
+    match /profiles/{userId}/{allPaths=**} {
+      // Authenticated users can view profile pictures
+      allow read: if isAuthenticated();
+
+      // Users can only upload their own profile picture; max 5 MB, must be image
+      allow write: if isAuthenticated() &&
+                      request.auth.uid == userId &&
+                      request.resource.size < 5 * 1024 * 1024 &&
+                      request.resource.contentType.matches('image/.*');
+    }
+
+    // ─── Deny everything else ───────────────────────────────────
+    match /{allPaths=**} {
+      allow read, write: if false;
     }
   }
 }

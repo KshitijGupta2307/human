@@ -1,53 +1,86 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Helper function to check if user is admin
-    function isAdmin() {
-      return request.auth != null && 
-             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
-    }
-    
-    // Helper function to check if user is authenticated
+
+    // ─── Helper Functions ───────────────────────────────────────
     function isAuthenticated() {
       return request.auth != null;
     }
-    
-    // Helper function to check if user owns the document
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
     function isOwner(userId) {
-      return request.auth != null && request.auth.uid == userId;
+      return isAuthenticated() && request.auth.uid == userId;
     }
-    
-    // Users collection
+
+    // Rate-limit helper: document must not have been updated in the last 1 second
+    function notRecentlyUpdated() {
+      return !exists(resource) || 
+             resource.data.updatedAt == null ||
+             request.time > resource.data.updatedAt + duration.value(1, 's');
+    }
+
+    // ─── Users Collection ───────────────────────────────────────
     match /users/{userId} {
-      // Anyone authenticated can read user documents
+      // Any authenticated user can read profiles (needed for display names, photos)
       allow read: if isAuthenticated();
-      
-      // Users can update their own document, or admins can update any
-      allow write: if isOwner(userId) || isAdmin();
+
+      // Users can create their own profile on first sign-in
+      allow create: if isOwner(userId) &&
+                       request.resource.data.keys().hasAll(['uid', 'email', 'displayName', 'role']) &&
+                       request.resource.data.role == 'student';
+
+      // Users can update only safe fields on their own profile
+      // Admins can update any user profile (assign roles, sections, etc.)
+      allow update: if (isOwner(userId) &&
+                        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])) ||
+                       isAdmin();
+
+      // Only admins can delete user documents
+      allow delete: if isAdmin();
     }
-    
-    // Notes collection
+
+    // ─── Notes Collection ───────────────────────────────────────
     match /notes/{noteId} {
-      // Anyone authenticated can read notes
+      // Any authenticated user can read notes
       allow read: if isAuthenticated();
-      
-      // Only admins can create, update, or delete notes
-      allow create, update, delete: if isAdmin();
+
+      // Only admins can create notes; must include required fields
+      allow create: if isAdmin() &&
+                       request.resource.data.keys().hasAll(['title', 'section', 'type', 'uploadedBy']);
+
+      // Only admins can update or delete notes
+      allow update, delete: if isAdmin();
     }
-    
-    // Progress collection
+
+    // ─── Progress Collection ────────────────────────────────────
     match /progress/{progressId} {
-      // Users can read all progress documents (for analytics)
+      // Authenticated users can read all progress (for analytics/stats)
       allow read: if isAuthenticated();
-      
-      // Users can only create progress for themselves
-      allow create: if isAuthenticated() && 
-                      request.resource.data.userId == request.auth.uid;
-      
-      // Users can only update/delete their own progress
-      allow update, delete: if isAuthenticated() && 
-                              resource.data.userId == request.auth.uid;
+
+      // Users can only create progress entries for themselves
+      allow create: if isAuthenticated() &&
+                       request.resource.data.userId == request.auth.uid &&
+                       request.resource.data.keys().hasAll(['userId', 'noteId', 'status']) &&
+                       request.resource.data.status in ['not-started', 'in-progress', 'completed'];
+
+      // Users can only update their own progress with valid status values
+      allow update: if isAuthenticated() &&
+                       resource.data.userId == request.auth.uid &&
+                       request.resource.data.status in ['not-started', 'in-progress', 'completed'] &&
+                       notRecentlyUpdated();
+
+      // Users can delete their own progress; admins can delete any
+      allow delete: if (isAuthenticated() && resource.data.userId == request.auth.uid) ||
+                       isAdmin();
+    }
+
+    // ─── Deny everything else ───────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
     }
   }
 }
